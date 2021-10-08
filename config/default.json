@@ -1,0 +1,10 @@
+{
+  "jwtPrivateKey": "",
+  "db": "mongodb+srv://hwangthehuman:123@cluster0.bui1f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "apn": {
+    "key": "apns.p8",
+    "keyId": "2H43UKU447",
+    "teamId": "AQW4645D3Q"
+  },
+  "smsc": { "login": "hwang.the.human", "password": "n23105972Nn" }
+}

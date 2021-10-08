@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "14.16.0"
+  },
+  "dependencies": {
+    "apn": "^2.2.0",
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.6",
+    "cryptr": "^6.0.2",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.3.0",
+    "form-data": "^4.0.0",
+    "fs": "^0.0.1-security",
+    "joi": "^17.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.13",
+    "multer": "^1.4.3",
+    "multer-gridfs-storage": "^5.0.1",
+    "querystring": "^0.2.1",
+    "regex-parser": "^2.2.11",
+    "uuid": "^8.3.2"
+  }
+}
