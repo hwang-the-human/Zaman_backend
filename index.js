@@ -1,17 +1,17 @@
-const config = require('config');
-const mongoose = require('mongoose');
-const express = require('express');
+const config = require("config");
+const mongoose = require("mongoose");
+const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
-const restaurants = require('./routes/restaurants');
-const clients = require('./routes/clients');
-const orders = require('./routes/orders');
-const couriers = require('./routes/couriers');
-const images = require('./routes/images');
-const Cryptr = require('cryptr');
+const restaurants = require("./routes/restaurants");
+const clients = require("./routes/clients");
+const orders = require("./routes/orders");
+const couriers = require("./routes/couriers");
+const images = require("./routes/images");
+const Cryptr = require("cryptr");
 
-if (!config.get('jwtPrivateKey')) {
-  console.log('FATAL ERROR: jwtPrivateKey is not defined.');
+if (!config.get("jwtPrivateKey")) {
+  console.log("FATAL ERROR: jwtPrivateKey is not defined.");
   process.exit(1);
 }
 
@@ -85,20 +85,20 @@ if (!config.get('jwtPrivateKey')) {
 // });
 
 app.use(express.json());
-app.use('/api/orders', orders);
-app.use('/api/restaurants', restaurants);
-app.use('/api/clients', clients);
-app.use('/api/couriers', couriers);
-app.use('/api/images', images);
+app.use("/api/orders", orders);
+app.use("/api/restaurants", restaurants);
+app.use("/api/clients", clients);
+app.use("/api/couriers", couriers);
+app.use("/api/images", images);
 
-app.listen(port, () => console.log('Listening on port', port + '...'));
+app.listen(port, () => console.log("Listening on port", port + "..."));
 
 mongoose
-  .connect(config.get('db'), {
+  .connect(config.get("db"), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
   })
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(error => console.log('Could not connect to MongoDB', error));
+  .then(() => console.log("Connected to MongoDB..."))
+  .catch((error) => console.log("Could not connect to MongoDB", error));
