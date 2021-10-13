@@ -94,15 +94,15 @@ router.patch("/order_for_courier", auth, async (req, res) => {
 });
 
 // Get list orders for restaurant
-router.get("/orders_for_restaurant", auth, async (req, res) => {
-  let orders = await Order.find({ "restaurant._id": req.user._id });
+router.get("/get_orders_for_restaurant", auth, async (req, res) => {
+  let orders = await Order.find({ "restaurant._id": req.user_id });
   res.status(200).send(orders);
 });
 
 // Remove order for courier
 router.patch("/remove_order_for_courier", auth, async (req, res) => {
   var result = await Order.findOneAndUpdate(
-    { "courier._id": req.user._id },
+    { "courier._id": req.user_id },
     {
       $set: { deleted: new Date() },
     }
