@@ -8,7 +8,7 @@ const config = require("config");
 var apn = require("apn");
 const { Restaurant } = require("../models/restaurant");
 
-// // Send notification
+// Send notification
 // router.post("/send_notification", async (req, res) => {
 //   const deviceToken = req.header("x-device-token");
 //   if (!deviceToken)
@@ -32,6 +32,7 @@ const { Restaurant } = require("../models/restaurant");
 //       keyId: config.get("apn.keyId"),
 //       teamId: config.get("apn.teamId"),
 //     },
+//     production: true,
 //   }).send(notification, deviceToken);
 
 //   res.send("OK");
@@ -74,6 +75,7 @@ router.post("/place_order", auth, async (req, res) => {
       keyId: config.get("apn.keyId"),
       teamId: config.get("apn.teamId"),
     },
+    production: config.get("NODE_ENV") === "production" ? true : false,
   }).send(notification, deviceToken);
 
   await newOrder.save();

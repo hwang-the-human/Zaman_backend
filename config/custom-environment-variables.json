@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": "Zaman_jwtPrivateKey"
+  "jwtPrivateKey": "Zaman_jwtPrivateKey",
+  "NODE_ENV": ""
 }
