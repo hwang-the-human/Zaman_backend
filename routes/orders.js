@@ -75,7 +75,7 @@ router.post("/place_order", auth, async (req, res) => {
       keyId: config.get("apn.keyId"),
       teamId: config.get("apn.teamId"),
     },
-    production: config.get("NODE_ENV") === "production" ? true : false,
+    production: true,
   }).send(notification, deviceToken);
 
   await newOrder.save();

@@ -1,6 +1,5 @@
 {
   "jwtPrivateKey": "",
-  "NODE_ENV": "",
   "server": "https://infinite-eyrie-01907.herokuapp.com/",
   "db": "mongodb+srv://hwangthehuman:123@cluster0.bui1f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   "apn": {
