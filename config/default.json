@@ -1,7 +1,7 @@
 {
   "jwtPrivateKey": "",
   "server": "https://infinite-eyrie-01907.herokuapp.com/",
-  "db": "mongodb+srv://hwangthehuman:123@cluster0.bui1f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "db": "mongodb+srv://hwang_the_human:n23105972Nn@zaman.ny5hz.mongodb.net/Zaman?retryWrites=true&w=majority",
   "apn": {
     "key": "apns.p8",
     "keyId": "2H43UKU447",

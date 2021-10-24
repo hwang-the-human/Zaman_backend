@@ -1,4 +1,5 @@
 const { Restaurant, validateSignIn } = require("../models/restaurant");
+const { Order } = require("../models/order");
 const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
@@ -8,7 +9,6 @@ const auth = require("../middleware/auth");
 const bcrypt = require("bcrypt");
 const config = require("config");
 const _ = require("lodash");
-const { Order } = require("../models/order");
 const mongoose = require("mongoose");
 
 // Get private restaurant's info
