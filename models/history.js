@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-const Order = mongoose.model(
-  "Order",
+const History = mongoose.model(
+  "History",
   new mongoose.Schema({
     restaurant: {
       _id: { type: String, required: true },
@@ -26,7 +26,7 @@ const Order = mongoose.model(
     },
     orders: { type: Array, required: true },
     total_price: { type: Number, required: true },
-    date: { type: Date, default: Date.now },
+    date: { type: Date, expires: "7d", default: Date.now },
   })
 );
 
@@ -65,34 +65,5 @@ function validate(order) {
   return schema.validate(order);
 }
 
-exports.Order = Order;
+exports.History = History;
 exports.validate = validate;
-
-// const Order = mongoose.model(
-//   'Order',
-//   new mongoose.Schema({
-//     restaurant: {
-//       _id: {type: ObjectId, required: true},
-//       title: {type: String, required: true},
-//       address: {type: String, required: true},
-//       phone: {type: String, required: true},
-//     },
-//     client: {
-//       _id: {type: ObjectId, required: true},
-//       name: {type: String, required: true},
-//       surname: {type: String, required: true},
-//       phone: {type: String, required: true},
-//       address: {type: Object, required: true},
-//       payment: {type: Object, required: true},
-//     },
-//     courier: {
-//       _id: {type: ObjectId, required: true},
-//       name: {type: String},
-//       surname: {type: String},
-//       phone: {type: String},
-//     },
-//     orders: {type: Array},
-//     date: {type: Date, default: new Date()},
-//     // deleted: Date,
-//   }).index({deleted: 1}, {expireAfterSeconds: 0}),
-// );

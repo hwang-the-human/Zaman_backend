@@ -173,74 +173,74 @@ router.patch("/save_device_token", auth, async (req, res) => {
   res.status(200).send("Success!");
 });
 
-const { v4 } = require("uuid");
-router.post("/register", async (req, res) => {
-  for (let index = 0; index < 25; index++) {
-    var dishes = [];
-    for (let index2 = 0; index2 < 25; index2++) {
-      dishes.push({
-        _id: v4(),
-        title: "Криспи Чикен" + (index + index2),
-        description: "Самые вкусные бургеры!",
-        image:
-          "https://infinite-eyrie-01907.herokuapp.com/api/images/image/614b68af41c852485f323355",
-        price: 1000,
-        in_stock: true,
-        type: index2 > 10 ? "Напитки0" : "Напитки1",
-        prerequisites:
-          index2 % 2 === 0
-            ? []
-            : [
-                {
-                  title: "Желаете добавить что-нибудь?",
-                  required: false,
-                  max: 2,
-                  options: [
-                    { title: "Соус сырный 1", price: 300 },
-                    { title: "Соус сырный 2", price: 400 },
-                    { title: "Соус сырный 3", price: 500 },
-                    { title: "Соус сырный 4", price: 600 },
-                    { title: "Соус сырный 5", price: 700 },
-                  ],
-                },
-                {
-                  title: "Желаете добавить что-нибудь?",
-                  required: true,
-                  max: 1,
-                  options: [
-                    { title: "Соус сырный 6", price: 0 },
-                    { title: "Соус сырный 7", price: 300 },
-                    { title: "Соус сырный 8", price: 0 },
-                  ],
-                },
-              ],
-      });
-    }
-    const newRestaurant = {
-      title: "Бургер Кинг" + index,
-      address: "Кабулкова" + index,
-      phone: "+7701555555" + index,
-      discount: 20,
-      categories: ["Азиатская", "Акции", "Восточная"],
-      image:
-        "https://infinite-eyrie-01907.herokuapp.com/api/images/image/614b68af41c852485f323355",
-      status: {
-        opened: false,
-        time: ["Пн - Пт: 9:00-22:00", "Сб: 9:00-22:00", "Вс: Закрыто"],
-      },
-      password: "$2b$10$VE1un6UO8nEJxjG3ruvY/ejNX6StpVx9mnuYcoFfjVKI5xkU8avmq",
-      notification: {
-        platform: "ios",
-        deviceToken:
-          "c0345104e975eb4eebacc989a7935e04fe44b7c9ee1c2844a02f05a25c59734e",
-      },
-      dishes: dishes,
-    };
-    const restaurant = new Restaurant(newRestaurant);
-    await restaurant.save();
-    dishes = [];
-  }
-  res.send("OK");
-});
+// const { v4 } = require("uuid");
+// router.post("/register", async (req, res) => {
+//   for (let index = 0; index < 25; index++) {
+//     var dishes = [];
+//     for (let index2 = 0; index2 < 25; index2++) {
+//       dishes.push({
+//         _id: v4(),
+//         title: "Криспи Чикен" + (index + index2),
+//         description: "Самые вкусные бургеры!",
+//         image:
+//           "https://infinite-eyrie-01907.herokuapp.com/api/images/image/614b68af41c852485f323355",
+//         price: 1000,
+//         in_stock: true,
+//         type: index2 > 10 ? "Напитки0" : "Напитки1",
+//         prerequisites:
+//           index2 % 2 === 0
+//             ? []
+//             : [
+//                 {
+//                   title: "Желаете добавить что-нибудь?",
+//                   required: false,
+//                   max: 2,
+//                   options: [
+//                     { title: "Соус сырный 1", price: 300 },
+//                     { title: "Соус сырный 2", price: 400 },
+//                     { title: "Соус сырный 3", price: 500 },
+//                     { title: "Соус сырный 4", price: 600 },
+//                     { title: "Соус сырный 5", price: 700 },
+//                   ],
+//                 },
+//                 {
+//                   title: "Желаете добавить что-нибудь?",
+//                   required: true,
+//                   max: 1,
+//                   options: [
+//                     { title: "Соус сырный 6", price: 0 },
+//                     { title: "Соус сырный 7", price: 300 },
+//                     { title: "Соус сырный 8", price: 0 },
+//                   ],
+//                 },
+//               ],
+//       });
+//     }
+//     const newRestaurant = {
+//       title: "Бургер Кинг" + index,
+//       address: "Кабулкова" + index,
+//       phone: "+7701555555" + index,
+//       discount: 20,
+//       categories: ["Азиатская", "Акции", "Восточная"],
+//       image:
+//         "https://infinite-eyrie-01907.herokuapp.com/api/images/image/614b68af41c852485f323355",
+//       status: {
+//         opened: false,
+//         time: ["Пн - Пт: 9:00-22:00", "Сб: 9:00-22:00", "Вс: Закрыто"],
+//       },
+//       password: "$2b$10$VE1un6UO8nEJxjG3ruvY/ejNX6StpVx9mnuYcoFfjVKI5xkU8avmq",
+//       notification: {
+//         platform: "ios",
+//         deviceToken:
+//           "c0345104e975eb4eebacc989a7935e04fe44b7c9ee1c2844a02f05a25c59734e",
+//       },
+//       dishes: dishes,
+//     };
+//     const restaurant = new Restaurant(newRestaurant);
+//     await restaurant.save();
+//     dishes = [];
+//   }
+//   res.send("OK");
+// });
 
 module.exports = router;

@@ -12,8 +12,8 @@ const _ = require("lodash");
 
 router.get("/me", auth, async (req, res) => {
   let courier = await Courier.findById(req.user_id).select("-password");
-  let orders = await Order.find({ "courier._id": req.user_id });
-  res.send({ courier: courier, orders: orders });
+  let order = await Order.findOne({ "courier._id": req.user_id });
+  res.send({ courier: courier, order: order });
 });
 
 // Sign in to courier account
@@ -34,11 +34,23 @@ router.post("/sign_in", async (req, res) => {
 
   const authToken = jwt.sign({ _id: courier._id }, config.get("jwtPrivateKey"));
 
-  let orders = await Order.find({ "courier._id": courier._id });
+  let order = await Order.findOne({ "courier._id": courier._id });
 
   res
     .header("x-auth-token", authToken)
-    .send({ courier: courier, orders: orders });
+    .send({ courier: courier, order: order });
+});
+
+router.patch("/save_device_token", auth, async (req, res) => {
+  await Courier.findByIdAndUpdate(req.user_id, {
+    $set: {
+      notification: {
+        platform: req.body.platform,
+        deviceToken: req.body.deviceToken,
+      },
+    },
+  });
+  res.sendStatus(200);
 });
 
 module.exports = router;
