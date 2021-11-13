@@ -9,6 +9,7 @@ const History = mongoose.model(
       title: { type: String, required: true },
       address: { type: String, required: true },
       phone: { type: String, required: true },
+      image: { type: String, required: true },
     },
     client: {
       _id: { type: String, required: true },

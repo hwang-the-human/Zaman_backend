@@ -68,7 +68,7 @@ router.post("/place_order", auth, async (req, res) => {
   const restaurant = await Restaurant.findById(req.body.restaurant._id).select(
     "status notification"
   );
-  const courier = await Courier.findOne({ status: true });
+  let courier = await Courier.findOne({ status: true });
 
   if (!restaurant.status.opened)
     return res.status(400).send("Ресторан закрыт.");
@@ -81,9 +81,18 @@ router.post("/place_order", auth, async (req, res) => {
   if (courier) {
     courier.status = false;
     await courier.save();
+
+    courier = {
+      _id: courier._id,
+      name: courier.name,
+      surname: courier.surname,
+      phone: courier.phone,
+      date: new Date(),
+    };
+
     newOrder = {
       ...newOrder,
-      courier: _.pick(courier, ["_id", "name", "surname", "phone"]),
+      courier: courier,
     };
     sendNotification(
       "com.khvan.zaman.courier",
