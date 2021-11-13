@@ -8,6 +8,7 @@ const _ = require("lodash");
 const auth = require("../middleware/auth");
 const config = require("config");
 const apn = require("apn");
+const moment = require("moment");
 
 // // Send notification
 // router.post("/send_notification", async (req, res) => {
@@ -131,6 +132,13 @@ router.post("/finish_order_for_courier", auth, async (req, res) => {
   });
 
   if (!order) return res.status(400).send("Заказ не существует.");
+
+  const now = moment(new Date());
+  const late = moment(order.date);
+  var minutes = now.diff(late, "minutes");
+
+  if (minutes <= 10)
+    return res.status(400).send("Должно пройти минимум 10 мин.");
 
   await order.remove();
 

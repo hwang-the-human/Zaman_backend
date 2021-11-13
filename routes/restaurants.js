@@ -114,7 +114,7 @@ router.get("/get_list_of_restaurants", async (req, res) => {
     .skip(itemCount)
     .limit(5)
     .sort({ title: 1 })
-    .select("-password");
+    .select("-password -dishes");
   res.send(restaurant);
 });
 
@@ -134,7 +134,7 @@ router.get("/get_list_of_restaurants_by_categories", async (req, res) => {
     .skip(itemCount)
     .limit(5)
     .sort({ title: 1 })
-    .select("-password");
+    .select("-password -dishes");
 
   res.send(restaurant);
 });
@@ -155,9 +155,18 @@ router.get("/get_list_of_restaurants_by_id", async (req, res) => {
   })
     .skip(itemCount)
     .limit(5)
-    .select("-password");
+    .select("-password -dishes");
 
   res.send(restaurant);
+});
+
+// Get selected dishes of selected restaurant
+router.get("/get_dishes_of_selected_restaurant", async (req, res) => {
+  var restaurant = await Restaurant.findOne({
+    _id: req.query._id,
+  }).select("dishes");
+
+  res.send(_.sortBy(restaurant.dishes, "type"));
 });
 
 router.patch("/save_device_token", auth, async (req, res) => {
@@ -175,18 +184,32 @@ router.patch("/save_device_token", auth, async (req, res) => {
 
 // const { v4 } = require("uuid");
 // router.post("/register", async (req, res) => {
+//   function getType(i) {
+//     switch (true) {
+//       case i <= 10:
+//         return "Бургеры";
+
+//       case i > 10 && i <= 20:
+//         return "Напитки";
+
+//       case i > 20 && i <= 30:
+//         return "Десерт";
+//       default:
+//         return "Напитки";
+//     }
+//   }
 //   for (let index = 0; index < 25; index++) {
 //     var dishes = [];
-//     for (let index2 = 0; index2 < 25; index2++) {
+//     for (let index2 = 0; index2 < 30; index2++) {
 //       dishes.push({
 //         _id: v4(),
-//         title: "Криспи Чикен" + (index + index2),
+//         title: getType(index2) + index2,
 //         description: "Самые вкусные бургеры!",
 //         image:
 //           "https://infinite-eyrie-01907.herokuapp.com/api/images/image/614b68af41c852485f323355",
 //         price: 1000,
 //         in_stock: true,
-//         type: index2 > 10 ? "Напитки0" : "Напитки1",
+//         type: getType(index2),
 //         prerequisites:
 //           index2 % 2 === 0
 //             ? []
@@ -218,7 +241,7 @@ router.patch("/save_device_token", auth, async (req, res) => {
 //     }
 //     const newRestaurant = {
 //       title: "Бургер Кинг" + index,
-//       address: "Кабулкова" + index,
+//       address: "Радостовца, 199а, Катаева, 188",
 //       phone: "+7701555555" + index,
 //       discount: 20,
 //       categories: ["Азиатская", "Акции", "Восточная"],
