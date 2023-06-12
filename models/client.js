@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const Joi = require('joi');
+const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const Client = mongoose.model(
-  'Client',
+  "Client",
   new mongoose.Schema({
-    name: {type: String, required: true, minlength: 1, maxlength: 50},
-    surname: {type: String, required: true, minlength: 1, maxlength: 50},
+    name: { type: String, required: true, minlength: 1, maxlength: 50 },
+    surname: { type: String, required: true, minlength: 1, maxlength: 50 },
     cards: [Object],
     addresses: [Object],
     phone: {
@@ -22,10 +22,11 @@ const Client = mongoose.model(
       maxlength: 1024,
     },
     notification: {
-      platform: {type: String, maxlength: 1024},
-      deviceToken: {type: String, maxlength: 1024},
+      messages: [],
+      platform: { type: String, maxlength: 1024 },
+      deviceToken: { type: String, maxlength: 1024 },
     },
-  }),
+  })
 );
 
 function validateSignUp(client) {

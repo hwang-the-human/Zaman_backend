@@ -2,6 +2,7 @@ const { Order, validate } = require("../models/order");
 const { Restaurant } = require("../models/restaurant");
 const { Courier } = require("../models/courier");
 const { History } = require("../models/history");
+const { Client } = require("../models/client");
 const express = require("express");
 const router = express.Router();
 const _ = require("lodash");
@@ -9,61 +10,29 @@ const auth = require("../middleware/auth");
 const config = require("config");
 const apn = require("apn");
 const moment = require("moment");
+const { sendNotification } = require("../extensions/notification");
 
-// // Send notification
-// router.post("/send_notification", async (req, res) => {
-//   const deviceToken = req.header("x-device-token");
-//   if (!deviceToken)
-//     return res.status(401).send("Токен устройства не предоставлен.");
+//Cancel order by restaurant
+router.patch("/cancel_order", async (req, res) => {
+  const client = await Client.findById(req.body.client_id);
 
-//   let notification = new apn.Notification({
-//     alert: {
-//       title: "Заказ",
-//       body: "У вас новый заказ",
-//     },
-//     topic: "com.khvan.zaman.courier",
-//     payload: {
-//       sender: "node-apn",
-//     },
-//     pushType: "background",
-//   });
+  if (!client) return res.status(400).send("Клиент не найден.");
 
-//   await new apn.Provider({
-//     token: {
-//       key: config.get("apn.key"),
-//       keyId: config.get("apn.keyId"),
-//       teamId: config.get("apn.teamId"),
-//     },
-//     production: false,
-//   }).send(notification, deviceToken);
+  client.notification.messages.push(req.body.message);
+  await client.save();
 
-//   res.send("OK");
-// });
+  // await Order.findByIdAndDelete(req.body.order_id);
 
-async function sendNotification(topic, deviceToken) {
-  let notification = new apn.Notification({
-    alert: {
-      title: "Заказ",
-      body: "У вас новый заказ",
-    },
-    topic: topic,
-    payload: {
-      sender: "node-apn",
-    },
-    pushType: "background",
-  });
+  sendNotification(
+    "Отмена заказа",
+    "com.khvan.zaman",
+    client.notification.deviceToken
+  );
 
-  await new apn.Provider({
-    token: {
-      key: config.get("apn.key"),
-      keyId: config.get("apn.keyId"),
-      teamId: config.get("apn.teamId"),
-    },
-    production: true,
-  }).send(notification, deviceToken);
-}
+  res.status(200).send("Success!");
+});
 
-// place a new order for client
+// Place a new order for client
 router.post("/place_order", auth, async (req, res) => {
   const restaurant = await Restaurant.findById(req.body.restaurant._id).select(
     "status notification"
@@ -95,6 +64,7 @@ router.post("/place_order", auth, async (req, res) => {
       courier: courier,
     };
     sendNotification(
+      "У вас новый заказ",
       "com.khvan.zaman.courier",
       courier.notification.deviceToken
     );
@@ -103,6 +73,7 @@ router.post("/place_order", auth, async (req, res) => {
   await new Order(newOrder).save();
 
   sendNotification(
+    "У вас новый заказ",
     "com.khvan.zaman.restaurant",
     restaurant.notification.deviceToken
   );

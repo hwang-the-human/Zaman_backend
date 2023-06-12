@@ -97,6 +97,16 @@ router.patch("/remove_addresses", auth, async (req, res) => {
   res.status(200).send("Addresses is deleted");
 });
 
+router.patch("/remove_messages", auth, async (req, res) => {
+  await Client.findByIdAndUpdate(req.user_id, {
+    $unset: {
+      "notification.messages": "",
+    },
+  });
+
+  res.status(200).send("Success!");
+});
+
 router.post("/sign_in", async (req, res) => {
   const { error } = validateSignIn(req.body);
   if (error) return res.status(400).send(error.details[0].message);

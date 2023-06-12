@@ -182,6 +182,17 @@ router.patch("/save_device_token", auth, async (req, res) => {
   res.status(200).send("Success!");
 });
 
+const { sendNotification } = require("../extensions/notification");
+router.post("/send_not", async (req, res) => {
+  sendNotification(
+    "Отмена заказа",
+    "com.khvan.zaman",
+    "d80ca63150fc77bc46214e4000bb68fdabe5ce204c1f245b0ef08171a772511e"
+  );
+
+  res.status(200).send("Success!");
+});
+
 // const { v4 } = require("uuid");
 // router.post("/register", async (req, res) => {
 //   function getType(i) {
