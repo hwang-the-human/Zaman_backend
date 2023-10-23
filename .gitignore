@@ -1,4 +1,4 @@
 node_modules/
 coverage/
-apns.p8/
 config/
+apns.p8
